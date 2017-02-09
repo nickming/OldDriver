@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:id="@+id/iv_chat_detail_right_head"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/head2"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:textColor="@color/primary_text_color"
+        android:layout_toLeftOf="@id/iv_chat_detail_right_head"
+        android:gravity="right"
+        android:singleLine="false"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:id="@+id/tv_chat_detail_right_content"
+        android:padding="10dp"
+        android:text="32323"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:background="@drawable/bubble_green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+    </TextView>
+
+</RelativeLayout>

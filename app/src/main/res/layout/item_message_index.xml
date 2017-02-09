@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_message_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@mipmap/ic_launcher" />
+
+
+        <com.wennuan.olddriver.ui.widget.badge.MaterialBadgeTextView
+            android:id="@+id/tv_message_badge"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="54dp"
+            android:textColor="@color/white"
+            app:mbtv_backgroundColor="#EF4738" />
+
+
+        <TextView
+            android:id="@+id/tv_message_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/iv_message_head"
+            android:text="name"
+            android:textColor="@color/primary_text_color"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_message_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_message_name"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/iv_message_head"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="content"
+            android:textColor="@color/secondary_text_color" />
+
+        <TextView
+            android:id="@+id/tv_message_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:textColor="@color/primary_text_color" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_divider"></include>
+
+</LinearLayout>

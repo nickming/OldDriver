@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/head1" />
+
+        <TextView
+            android:textColor="@color/primary_text_color"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="wrap_content"
+            android:text="喵喵"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_collect_date"
+            android:layout_width="match_parent"
+            android:text="2017年1月23日"
+            android:gravity="right"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:tint="@color/colorPrimary"
+            android:src="@drawable/ic_camera"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <TextView
+            android:textColor="@color/secondary_text_color"
+            android:layout_gravity="center_vertical"
+            android:text="收藏的详细内容"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <include layout="@layout/view_divider"></include>
+
+</LinearLayout>

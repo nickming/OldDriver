@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <PreferenceCategory android:title="数据">
+
+
+
+        <Preference
+            android:key="clear_all_data"
+            android:summary="清楚所有聊天数据"
+            android:title="清空数据" />
+        <Preference
+            android:key="clear_cache"
+            android:summary="删除应用缓存的数据"
+            android:title="清空缓存" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory android:title="其它">
+        <Preference
+            android:summary="V1.0"
+            android:title="当前版本">
+
+        </Preference>
+
+        <Preference
+            android:summary="详情联系我"
+            android:title="温暖">
+
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

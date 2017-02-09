@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs xmlns:android="http://schemas.android.com/apk/res/android">
+    <tab
+        id="@+id/tab_message"
+        icon="@drawable/ic_message"
+        title="消息"
+        barColorWhenSelected="@color/blue_gray_900"/>
+    <tab
+        id="@+id/tab_contacts"
+        icon="@drawable/ic_contacts"
+        title="通讯录"
+        barColorWhenSelected="@color/blue_gray_900"/>
+    <tab
+        id="@+id/tab_discover"
+        icon="@drawable/ic_camera"
+        title="发现"
+        barColorWhenSelected="@color/blue_gray_900"/>
+    <tab
+        id="@+id/tab_mime"
+        icon="@drawable/ic_account_circle"
+        title="我"
+        barColorWhenSelected="@color/blue_gray_900"/>
+</tabs>

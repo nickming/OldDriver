@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_discover"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.wennuan.olddriver.ui.main.discover.AddDiscoverActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue_gray_900">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="发表文字"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_add_discover_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="取消"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_add_discover_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="发送"
+            android:textColor="@color/colorPrimary" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:padding="10dp"
+        android:gravity="top"
+        android:id="@+id/et_add_discover"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <include layout="@layout/view_divider"></include>
+
+</LinearLayout>

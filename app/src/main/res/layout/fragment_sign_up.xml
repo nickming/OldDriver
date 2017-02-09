@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/blue_gray_900">
+
+        <TextView
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="注册"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_sign_up_back"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_arrow_back"
+            android:layout_width="23dp"
+            android:layout_height="23dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_sign_username"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="Username"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_sign_phone"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="Phone"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/et_sign_password"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="Password"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:inputType="textPassword"
+            android:id="@+id/et_sign_password_again"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:hint="Password Again"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_sin_up_complete"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/white"
+        android:text="注册"
+        android:background="@drawable/btn_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+
+
+</LinearLayout>
