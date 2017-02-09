@@ -12,5 +12,7 @@ public class Constant {
 
     public static String CLIENT_ID = "5899d77b2f301e0069240b24";
 
-    public static String SEARCH_USER_INFO = "search_user";
+    public static final String SEARCH_USER_INFO = "search_user";
+
+    public static final String HEAD="head";
 }

@@ -105,13 +105,14 @@ public class MessageFragment extends BaseFragment {
         AVIMMessageManager.registerMessageHandler(AVIMTextMessage.class, mMessageHandler);
 
         mSearchHeader = LayoutInflater.from(getActivity()).inflate(R.layout.view_search_bar, null, false);
+
+        mSearchContainer = (RelativeLayout) mSearchHeader.findViewById(R.id.rl_search_bar_container);
         mSearchContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), SearchUserActivity.class));
             }
         });
-        mSearchContainer = (RelativeLayout) mSearchHeader.findViewById(R.id.rl_search_bar_container);
         mMessageAdapter = new MessageAdapter(mMessageEntities);
         mMessageRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 

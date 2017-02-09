@@ -1,6 +1,8 @@
 package com.wennuan.olddriver.ui.main.contact;
 
 import com.avos.avoscloud.AVUser;
+import com.wennuan.olddriver.base.Constant;
+import com.wennuan.olddriver.entity.HeadChoiceEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +46,16 @@ public class ContactManager {
             }
         }
         return username;
+    }
+
+    public int getUserHead(String objectId) {
+        int type = 1;
+        for (AVUser user : mUserList) {
+            if (objectId.equals(user.getObjectId())) {
+                type = (int) user.get(Constant.HEAD);
+                break;
+            }
+        }
+        return HeadChoiceEntity.getHeadReasource(type);
     }
 }

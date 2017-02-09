@@ -2,8 +2,10 @@ package com.wennuan.olddriver.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
@@ -20,13 +23,17 @@ import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.SignUpCallback;
 import com.orhanobut.logger.Logger;
 import com.wennuan.olddriver.R;
+import com.wennuan.olddriver.adapter.HeadChoiceAdapter;
 import com.wennuan.olddriver.base.BaseFragment;
+import com.wennuan.olddriver.base.Constant;
+import com.wennuan.olddriver.entity.HeadChoiceEntity;
 import com.wennuan.olddriver.entity.ReplaceFragmentEvent;
 import com.wennuan.olddriver.ui.main.MainActivity;
 import com.wennuan.olddriver.ui.main.contact.ContactManager;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,9 +61,15 @@ public class SignUpFragment extends BaseFragment {
     Button mSinUpCompleteBtn;
     @BindView(R.id.btn_sign_up_back)
     Button mSignUpBackBtn;
+    @BindView(R.id.btn_sin_up_choice_head)
+    Button mSinUpChoiceHeadBtn;
+
+    private int mCurrentHeadType = HeadChoiceEntity.TYPE_1;
 
     private View mRootView;
     private MaterialDialog mProgressDialog;
+    private HeadChoiceAdapter choiceAdapter;
+    List<HeadChoiceEntity> headChoiceEntities = new ArrayList<>();
 
     public static SignUpFragment newInstance() {
 
@@ -79,6 +92,24 @@ public class SignUpFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        for (int i = 1; i < 5; i++) {
+            headChoiceEntities.add(new HeadChoiceEntity(i));
+        }
+        choiceAdapter = new HeadChoiceAdapter(headChoiceEntities);
+        choiceAdapter.setListener(new HeadChoiceAdapter.SelectChangeListener() {
+            @Override
+            public void select(int index) {
+                for (HeadChoiceEntity entity : headChoiceEntities) {
+                    entity.setSelect(false);
+                }
+                headChoiceEntities.get(index).setSelect(true);
+                mCurrentHeadType = headChoiceEntities.get(index).getType();
+                Logger.i("选中头像为:" + mCurrentHeadType);
+            }
+        });
+
+        headChoiceEntities.get(0).setSelect(true);
+
         mProgressDialog = new MaterialDialog.Builder(getActivity())
                 .title("注册")
                 .content("验证中...")
@@ -99,6 +130,28 @@ public class SignUpFragment extends BaseFragment {
             }
         });
 
+        mSinUpChoiceHeadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choiceHead();
+            }
+        });
+
+    }
+
+    private void choiceHead() {
+
+        new MaterialDialog.Builder(getActivity())
+                .title("选择头像")
+                .adapter(choiceAdapter, new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false))
+                .positiveText("确认")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     private void signUp() {
@@ -119,6 +172,7 @@ public class SignUpFragment extends BaseFragment {
             user.setUsername(username);
             user.setMobilePhoneNumber(phone);
             user.setPassword(password);
+            user.put(Constant.HEAD, mCurrentHeadType);
             user.signUpInBackground(new SignUpCallback() {
                 @Override
                 public void done(AVException e) {
@@ -134,7 +188,7 @@ public class SignUpFragment extends BaseFragment {
                                 userAVQuery.findInBackground(new FindCallback<AVUser>() {
                                     @Override
                                     public void done(List<AVUser> list, AVException e) {
-                                        Logger.i("获取用户数量:"+list.size());
+                                        Logger.i("获取用户数量:" + list.size());
                                         ContactManager.getInstance().setUserList(list);
                                         startActivity(new Intent(getActivity(), MainActivity.class));
                                         getActivity().finish();

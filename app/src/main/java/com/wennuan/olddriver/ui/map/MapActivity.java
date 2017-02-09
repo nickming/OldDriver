@@ -2,7 +2,11 @@ package com.wennuan.olddriver.ui.map;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -16,16 +20,16 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 import com.orhanobut.logger.Logger;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.wennuan.olddriver.R;
 import com.wennuan.olddriver.base.BaseActivity;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.functions.Action1;
 
 public class MapActivity extends BaseActivity implements LocationSource, AMapLocationListener {
 
@@ -33,6 +37,12 @@ public class MapActivity extends BaseActivity implements LocationSource, AMapLoc
 
     @BindView(R.id.map_view)
     MapView mMapView;
+    @BindView(R.id.tv_map_title)
+    TextView tvMapTitle;
+    @BindView(R.id.btn_map_detail_back)
+    Button btnMapDetailBack;
+    @BindView(R.id.activity_map)
+    LinearLayout activityMap;
 
     //地图控制器
     private AMap mMapController;
@@ -72,23 +82,35 @@ public class MapActivity extends BaseActivity implements LocationSource, AMapLoc
         //设置希望展示的地图缩放级别
         CameraUpdate mCameraUpdate = CameraUpdateFactory.zoomTo(17);
 
+//        Manifest.permission.ACCESS_COARSE_LOCATION,
+//                Manifest.permission.ACCESS_FINE_LOCATION,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                Manifest.permission.READ_PHONE_STATE
 
-        // 先判断是否有权限。
-        if (AndPermission.hasPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // 有权限，直接do anything.
-        } else {
-            // 申请权限。
-            AndPermission.with(this)
-                    .requestCode(100)
-                    .permission(Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_PHONE_STATE)
-                    .send();
-        }
+        btnMapDetailBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
+        RxPermissions permissions = new RxPermissions(this);
+        permissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE)
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                            Snackbar.make(activityMap, "申请成功!", Snackbar.LENGTH_SHORT).show();
+                        } else {
+                            Snackbar.make(activityMap, "申请失败!", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
 //        MarkerOptions markerOption = new MarkerOptions();
 //        markerOption.position(new LatLng(34.341568, 108.940174));
@@ -114,47 +136,6 @@ public class MapActivity extends BaseActivity implements LocationSource, AMapLoc
 //        mMapController.setOnMarkerClickListener(markerClickListener);
     }
 
-    private PermissionListener listener = new PermissionListener() {
-        @Override
-        public void onSucceed(int requestCode, List<String> grantedPermissions) {
-            // 权限申请成功回调。
-            if (requestCode == 100) {
-                // TODO 相应代码。
-            } else if (requestCode == 101) {
-                // TODO 相应代码。
-            }
-        }
-
-        @Override
-        public void onFailed(int requestCode, List<String> deniedPermissions) {
-            // 权限申请失败回调。
-
-            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
-            if (AndPermission.hasAlwaysDeniedPermission(MapActivity.this, deniedPermissions)) {
-                // 第一种：用默认的提示语。
-                AndPermission.defaultSettingDialog(MapActivity.this, 100).show();
-                // 第二种：用自定义的提示语。
-                // AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING)
-                // .setTitle("权限申请失败")
-                // .setMessage("我们需要的一些权限被您拒绝或者系统发生错误申请失败，请您到设置页面手动授权，否则功能无法正常使用！")
-                // .setPositiveButton("好，去设置")
-                // .show();
-
-                // 第三种：自定义dialog样式。
-                // SettingService settingService =
-                //    AndPermission.defineSettingDialog(this, REQUEST_CODE_SETTING);
-                // 你的dialog点击了确定调用：
-                // settingService.execute();
-                // 你的dialog点击了取消调用：
-                // settingService.cancel();
-            }
-        }
-    };
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        AndPermission.onRequestPermissionsResult(requestCode, permissions, grantResults, listener);
-    }
 
     @Override
     protected void onDestroy() {

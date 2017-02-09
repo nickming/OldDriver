@@ -44,6 +44,11 @@ public class MessageEntity implements Serializable {
         return username;
     }
 
+    public int getUserHead()
+    {
+        return ContactManager.getInstance().getUserHead(getClientId());
+    }
+
 
     public String getClientId() {
         String clientId = "";

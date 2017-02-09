@@ -3,8 +3,10 @@ package com.wennuan.olddriver.adapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wennuan.olddriver.R;
+import com.wennuan.olddriver.base.Constant;
 import com.wennuan.olddriver.entity.ContactEntity;
 import com.wennuan.olddriver.entity.ContactSectionEntity;
+import com.wennuan.olddriver.entity.HeadChoiceEntity;
 
 import java.util.List;
 
@@ -36,7 +38,8 @@ public class ContactSectionAdapter extends BaseSectionQuickAdapter<ContactSectio
     @Override
     protected void convert(BaseViewHolder helper, ContactSectionEntity item) {
         ContactEntity contactEntity = item.t;
-        helper.setImageResource(R.id.iv_contact_head, R.mipmap.head3);
+        int type = (int) contactEntity.getmProxy().get(Constant.HEAD);
+        helper.setImageResource(R.id.iv_contact_head, HeadChoiceEntity.getHeadReasource(type));
         helper.setText(R.id.tv_contact_name, contactEntity.getmProxy().getUsername());
         helper.setText(R.id.tv_contact_phone, contactEntity.getmProxy().getMobilePhoneNumber());
     }

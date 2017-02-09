@@ -32,7 +32,7 @@ public class MessageAdapter extends BaseItemDraggableAdapter<MessageEntity, Base
     @Override
     protected void convert(final BaseViewHolder helper, MessageEntity item) {
         AVIMConversation conversation = item.getLastConversation();
-        helper.setImageResource(R.id.iv_message_head, R.mipmap.head1);
+        helper.setImageResource(R.id.iv_message_head, item.getUserHead());
         helper.setText(R.id.tv_message_date,
                 TimeUtil.getMixTimeFromTimestamp(conversation.getLastMessageAt().getTime(), 7 * 24 * 60 * 60, "MM-dd")
         );

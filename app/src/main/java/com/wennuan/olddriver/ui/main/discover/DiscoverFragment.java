@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVStatus;
@@ -16,7 +17,9 @@ import com.avos.avoscloud.InboxStatusFindCallback;
 import com.wennuan.olddriver.R;
 import com.wennuan.olddriver.adapter.DiscoverAdapter;
 import com.wennuan.olddriver.base.BaseFragment;
+import com.wennuan.olddriver.base.Constant;
 import com.wennuan.olddriver.entity.DiscoverEntity;
+import com.wennuan.olddriver.entity.HeadChoiceEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +40,7 @@ public class DiscoverFragment extends BaseFragment {
     @BindView(R.id.rv_discover)
     RecyclerView mDiscoverRv;
 
-    private List<DiscoverEntity> mDiscoverEntities=  new ArrayList<>();
+    private List<DiscoverEntity> mDiscoverEntities = new ArrayList<>();
     private DiscoverAdapter mAdapter;
 
     public static DiscoverFragment newInstance() {
@@ -61,9 +64,13 @@ public class DiscoverFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mDiscoverRv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        mAdapter=new DiscoverAdapter(mDiscoverEntities);
-        mAdapter.addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.view_discover_header,null,false));
+        mDiscoverRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mAdapter = new DiscoverAdapter(mDiscoverEntities);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_discover_header, null, false);
+        ImageView head = (ImageView) view.findViewById(R.id.iv_discover_header_head);
+        int type = (int) AVUser.getCurrentUser().get(Constant.HEAD);
+        head.setImageResource(HeadChoiceEntity.getHeadReasource(type));
+        mAdapter.addHeaderView(view);
         mDiscoverRv.setAdapter(mAdapter);
     }
 
@@ -73,17 +80,15 @@ public class DiscoverFragment extends BaseFragment {
         requestStatusData();
     }
 
-    private void requestStatusData()
-    {
-        AVStatusQuery inboxQuery = AVStatus.inboxQuery(AVUser.getCurrentUser(),AVStatus.INBOX_TYPE.TIMELINE.toString());
+    private void requestStatusData() {
+        AVStatusQuery inboxQuery = AVStatus.inboxQuery(AVUser.getCurrentUser(), AVStatus.INBOX_TYPE.TIMELINE.toString());
         inboxQuery.setLimit(100);  //设置最多返回 50 条状态
         inboxQuery.setSinceId(0);  //查询返回的 status 的 messageId 必须大于 sinceId，默认为 0
-        inboxQuery.findInBackground(new InboxStatusFindCallback(){
+        inboxQuery.findInBackground(new InboxStatusFindCallback() {
             @Override
             public void done(final List<AVStatus> avObjects, final AVException avException) {
                 mDiscoverEntities.clear();
-                for (AVStatus status : avObjects)
-                {
+                for (AVStatus status : avObjects) {
                     mDiscoverEntities.add(new DiscoverEntity(status));
                 }
                 mAdapter.notifyDataSetChanged();

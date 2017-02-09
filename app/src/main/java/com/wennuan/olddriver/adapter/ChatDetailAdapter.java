@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wennuan.olddriver.R;
 import com.wennuan.olddriver.entity.ChatDetailEntity;
+import com.wennuan.olddriver.ui.main.contact.ContactManager;
 
 import java.util.List;
 
@@ -32,11 +33,14 @@ public class ChatDetailAdapter extends BaseMultiItemQuickAdapter<ChatDetailEntit
 
     @Override
     protected void convert(BaseViewHolder helper, ChatDetailEntity item) {
+        int head = ContactManager.getInstance().getUserHead(item.getProxy().getFrom());
         switch (item.getItemType()) {
             case ChatDetailEntity.MIME:
+                helper.setImageResource(R.id.iv_chat_detail_right_head, head);
                 helper.setText(R.id.tv_chat_detail_right_content, item.getProxy().getText());
                 break;
             case ChatDetailEntity.OTHER:
+                helper.setImageResource(R.id.iv_chat_detail_left_head, head);
                 helper.setText(R.id.tv_chat_detail_left_content, item.getProxy().getText());
                 break;
         }

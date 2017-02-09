@@ -3,7 +3,9 @@ package com.wennuan.olddriver.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wennuan.olddriver.R;
+import com.wennuan.olddriver.base.Constant;
 import com.wennuan.olddriver.entity.DiscoverEntity;
+import com.wennuan.olddriver.entity.HeadChoiceEntity;
 import com.wennuan.olddriver.util.TimeUtil;
 
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
  * E-mail:
  */
 
-public class DiscoverAdapter extends BaseQuickAdapter<DiscoverEntity,BaseViewHolder> {
+public class DiscoverAdapter extends BaseQuickAdapter<DiscoverEntity, BaseViewHolder> {
 
 
     public DiscoverAdapter(List<DiscoverEntity> data) {
@@ -25,8 +27,10 @@ public class DiscoverAdapter extends BaseQuickAdapter<DiscoverEntity,BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, DiscoverEntity item) {
-        helper.setText(R.id.tv_discover_name,item.getmProxy().getSource().getUsername());
-        helper.setText(R.id.tv_discover_content,item.getmProxy().getMessage());
+        int type = (int) item.getmProxy().getSource().get(Constant.HEAD);
+        helper.setImageResource(R.id.iv_discover_head, HeadChoiceEntity.getHeadReasource(type));
+        helper.setText(R.id.tv_discover_name, item.getmProxy().getSource().getUsername());
+        helper.setText(R.id.tv_discover_content, item.getmProxy().getMessage());
         helper.setText(R.id.tv_discover_date,
                 TimeUtil.getMixTimeFromTimestamp(item.getmProxy().getCreatedAt().getTime(), 7 * 24 * 60 * 60, "yyyy-MM-dd")
         );

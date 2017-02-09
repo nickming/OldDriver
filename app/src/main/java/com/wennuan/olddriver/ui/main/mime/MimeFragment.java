@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVUser;
 import com.wennuan.olddriver.R;
 import com.wennuan.olddriver.base.BaseFragment;
+import com.wennuan.olddriver.base.Constant;
 import com.wennuan.olddriver.entity.ActivityCloseEvent;
+import com.wennuan.olddriver.entity.HeadChoiceEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -67,7 +69,8 @@ public class MimeFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ivMimeUsername.setImageResource(R.mipmap.head1);
+        int type = (int) AVUser.getCurrentUser().get(Constant.HEAD);
+        ivMimeUsername.setImageResource(HeadChoiceEntity.getHeadReasource(type));
         tvMimeUsername.setText(AVUser.getCurrentUser().getUsername());
         tvMimePhone.setText(AVUser.getCurrentUser().getMobilePhoneNumber());
     }

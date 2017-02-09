@@ -57,7 +57,9 @@
 
         <activity android:name=".ui.main.contact.SearchUserActivity" />
         <activity android:name=".ui.map.MapActivity" />
-        <activity android:name=".ui.login.LoginActivity"></activity>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
         <activity
             android:name=".ui.main.chat.ChatDetailActivity"
             android:launchMode="singleTask"

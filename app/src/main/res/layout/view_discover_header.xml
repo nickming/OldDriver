@@ -14,6 +14,7 @@
         android:src="@drawable/financing_dark_bg" />
 
     <ImageView
+        android:id="@+id/iv_discover_header_head"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="-20dp"
