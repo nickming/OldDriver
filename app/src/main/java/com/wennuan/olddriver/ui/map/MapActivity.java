@@ -1,8 +1,10 @@
 package com.wennuan.olddriver.ui.map;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -20,6 +22,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 import com.orhanobut.logger.Logger;
+import com.tbruyelle.rxpermissions.Permission;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.wennuan.olddriver.R;
 import com.wennuan.olddriver.base.BaseActivity;
@@ -95,22 +98,26 @@ public class MapActivity extends BaseActivity implements LocationSource, AMapLoc
             }
         });
 
-        RxPermissions permissions = new RxPermissions(this);
-        permissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.READ_PHONE_STATE)
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            Snackbar.make(activityMap, "申请成功!", Snackbar.LENGTH_SHORT).show();
-                        } else {
-                            Snackbar.make(activityMap, "申请失败!", Snackbar.LENGTH_SHORT).show();
+        //没有权限时检查
+        if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            RxPermissions permissions = new RxPermissions(this);
+            permissions.requestEach(Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE)
+                    .subscribe(new Action1<Permission>() {
+                        @Override
+                        public void call(Permission permission) {
+                            if (permission.granted) {
+                                Snackbar.make(activityMap, "申请成功!", Snackbar.LENGTH_SHORT).show();
+                            } else {
+                                Snackbar.make(activityMap, "申请失败!", Snackbar.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
+
 
 //        MarkerOptions markerOption = new MarkerOptions();
 //        markerOption.position(new LatLng(34.341568, 108.940174));

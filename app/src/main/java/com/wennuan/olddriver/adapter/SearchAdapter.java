@@ -4,6 +4,8 @@ import com.avos.avoscloud.AVUser;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wennuan.olddriver.R;
+import com.wennuan.olddriver.base.Constant;
+import com.wennuan.olddriver.entity.HeadChoiceEntity;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  * E-mail:
  */
 
-public class SearchAdapter extends BaseQuickAdapter<AVUser,BaseViewHolder> {
+public class SearchAdapter extends BaseQuickAdapter<AVUser, BaseViewHolder> {
 
 
     public SearchAdapter(List<AVUser> data) {
@@ -24,7 +26,10 @@ public class SearchAdapter extends BaseQuickAdapter<AVUser,BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, AVUser item) {
-        helper.setImageResource(R.id.iv_contact_head, R.mipmap.head3);
+        int type = (int) item.get(Constant.HEAD);
+
+        helper.setImageResource(R.id.iv_contact_head, HeadChoiceEntity.getHeadReasource(type));
         helper.setText(R.id.tv_contact_name, item.getUsername());
+        helper.setText(R.id.tv_contact_phone, item.getMobilePhoneNumber());
     }
 }
